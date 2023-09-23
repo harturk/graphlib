@@ -6,25 +6,7 @@
 struct image_s data;
 struct image_s *image = &data;
 
-int convolving3x3(int j, int i, int weigth[3][3])
-{
-    int pixelValue = 0;
-
-    for (int y = 0; y < 3; y++)
-    {
-        for (int x = 0; x < 3; x++)
-        {
-            int greyScaleR = image->pix[(j + y) * image->width + (i + x)].r * 0.299;
-            int greyScaleG = image->pix[(j + y) * image->width + (i + x)].g * 0.587;
-            int greyScaleB = image->pix[(j + y) * image->width + (i + x)].b * 0.114;
-            pixelValue = pixelValue + weigth[x][y] * (greyScaleR + greyScaleG + greyScaleB);
-        }
-    }
-
-    return pixelValue;
-}
-
-void sobel(int r)
+void threshold(int weigth)
 {
     int r = read_ppm("images/lena.ppm", image);
 

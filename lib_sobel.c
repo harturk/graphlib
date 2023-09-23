@@ -24,7 +24,7 @@ int convolving3x3(int j, int i, int weigth[3][3])
     return pixelValue;
 }
 
-void sobel(int r)
+void sobel()
 {
     int r = read_ppm("images/lena.ppm", image);
 
