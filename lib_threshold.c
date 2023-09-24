@@ -6,7 +6,7 @@
 struct image_s data;
 struct image_s *image = &data;
 
-void threshold(int weigth)
+void threshold(int weight)
 {
     int r = read_ppm("images/lena.ppm", image);
 

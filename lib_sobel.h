@@ -5,5 +5,5 @@ struct image_s
     struct pixel_s *pix;
 };
 
-int convolving3x3(int j, int i, int weigth[3][3]);
+int convolving3x3(int j, int i, int weight[3][3]);
 void sobel();

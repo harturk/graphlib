@@ -6,7 +6,7 @@
 struct image_s data;
 struct image_s *image = &data;
 
-int convolving2x2(int j, int i, int weigth[2][2])
+int convolving2x2(int j, int i, int weight[2][2])
 {
     int pixelValue = 0;
 
@@ -17,7 +17,7 @@ int convolving2x2(int j, int i, int weigth[2][2])
             int greyScaleR = image->pix[(j + y) * image->width + (i + x)].r * 0.299;
             int greyScaleG = image->pix[(j + y) * image->width + (i + x)].g * 0.587;
             int greyScaleB = image->pix[(j + y) * image->width + (i + x)].b * 0.114;
-            pixelValue = pixelValue + weigth[x][y] * (greyScaleR + greyScaleG + greyScaleB);
+            pixelValue = pixelValue + weight[x][y] * (greyScaleR + greyScaleG + greyScaleB);
         }
     }
 
@@ -32,11 +32,11 @@ void richardCross()
     if (r == 0)
     {
 
-        int gxWeigth[2][2] = {
+        int gxWeight[2][2] = {
             {1, 0},
             {0, -1}};
 
-        int gyWeigth[2][2] = {
+        int gyWeighty[2][2] = {
             {0, 1},
             {-1, 0}};
 
@@ -44,8 +44,8 @@ void richardCross()
         {
             for (int i = 1; i < image->width - 1; i++)
             {
-                int gx = convolving2x2(j, i, gxWeigth);
-                int gy = convolving2x2(j, i, gyWeigth);
+                int gx = convolving2x2(j, i, gxWeight);
+                int gy = convolving2x2(j, i, gyWeight);
 
                 image->pix[j * image->width + i].r = abs(gx) + abs(gy);
                 image->pix[j * image->width + i].g = abs(gx) + abs(gy);

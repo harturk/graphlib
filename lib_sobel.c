@@ -6,7 +6,7 @@
 struct image_s data;
 struct image_s *image = &data;
 
-int convolving3x3(int j, int i, int weigth[3][3])
+int convolving3x3(int j, int i, int weight[3][3])
 {
     int pixelValue = 0;
 
@@ -17,7 +17,7 @@ int convolving3x3(int j, int i, int weigth[3][3])
             int greyScaleR = image->pix[(j + y) * image->width + (i + x)].r * 0.299;
             int greyScaleG = image->pix[(j + y) * image->width + (i + x)].g * 0.587;
             int greyScaleB = image->pix[(j + y) * image->width + (i + x)].b * 0.114;
-            pixelValue = pixelValue + weigth[x][y] * (greyScaleR + greyScaleG + greyScaleB);
+            pixelValue = pixelValue + weight[x][y] * (greyScaleR + greyScaleG + greyScaleB);
         }
     }
 
@@ -31,12 +31,12 @@ void sobel()
     if (r == 0)
     {
 
-        int gxWeigth[3][3] = {
+        int gxWeight[3][3] = {
             {-1, 0, 1},
             {-2, 0, 2},
             {-1, 0, 1}};
 
-        int gyWeigth[3][3] = {
+        int gyWeight[3][3] = {
             {1, 2, 1},
             {0, 0, 0},
             {-1, -2, -1}};
@@ -45,8 +45,8 @@ void sobel()
         {
             for (int i = 1; i < image->width - 1; i++)
             {
-                int gx = convolving3x3(j, i, gxWeigth);
-                int gy = convolving3x3(j, i, gyWeigth);
+                int gx = convolving3x3(j, i, gxWeight);
+                int gy = convolving3x3(j, i, gyWeight);
 
                 image->pix[j * image->width + i].r = abs(gx) + abs(gy);
                 image->pix[j * image->width + i].g = abs(gx) + abs(gy);

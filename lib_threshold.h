@@ -5,4 +5,4 @@ struct image_s
     struct pixel_s *pix;
 };
 
-void threshold(int weigth);
+void threshold(int weight);
