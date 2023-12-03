@@ -4,7 +4,7 @@
 #include "lib_ppm.h"
 
 struct image_s data;
-struct image_s *image = &data;
+struct image_s *imageSob = &data;
 
 int convolving3x3(int j, int i, int weight[3][3])
 {
@@ -14,9 +14,9 @@ int convolving3x3(int j, int i, int weight[3][3])
     {
         for (int x = 0; x < 3; x++)
         {
-            int greyScaleR = image->pix[(j + y) * image->width + (i + x)].r * 0.299;
-            int greyScaleG = image->pix[(j + y) * image->width + (i + x)].g * 0.587;
-            int greyScaleB = image->pix[(j + y) * image->width + (i + x)].b * 0.114;
+            int greyScaleR = imageSob->pix[(j + y) * imageSob->width + (i + x)].r * 0.299;
+            int greyScaleG = imageSob->pix[(j + y) * imageSob->width + (i + x)].g * 0.587;
+            int greyScaleB = imageSob->pix[(j + y) * imageSob->width + (i + x)].b * 0.114;
             pixelValue = pixelValue + weight[x][y] * (greyScaleR + greyScaleG + greyScaleB);
         }
     }
@@ -26,7 +26,7 @@ int convolving3x3(int j, int i, int weight[3][3])
 
 void sobel()
 {
-    int r = read_ppm("images/lena.ppm", image);
+    int r = read_ppm("images/lena.ppm", imageSob);
 
     if (r == 0)
     {
@@ -41,22 +41,20 @@ void sobel()
             {0, 0, 0},
             {-1, -2, -1}};
 
-        for (int j = 1; j < image->height - 1; j++)
+        for (int j = 1; j < imageSob->height - 1; j++)
         {
-            for (int i = 1; i < image->width - 1; i++)
+            for (int i = 1; i < imageSob->width - 1; i++)
             {
                 int gx = convolving3x3(j, i, gxWeight);
                 int gy = convolving3x3(j, i, gyWeight);
 
-                image->pix[j * image->width + i].r = abs(gx) + abs(gy);
-                image->pix[j * image->width + i].g = abs(gx) + abs(gy);
-                image->pix[j * image->width + i].b = abs(gx) + abs(gy);
+                imageSob->pix[j * imageSob->width + i].r = abs(gx) + abs(gy);
+                imageSob->pix[j * imageSob->width + i].g = abs(gx) + abs(gy);
+                imageSob->pix[j * imageSob->width + i].b = abs(gx) + abs(gy);
             }
         }
 
-        write_ppm("3-sobel_test.ppm", image);
-        free_ppm(image);
+        write_ppm("./3-sobel_test.ppm", imageSob);
+        free_ppm(imageSob);
     }
-
-    return 0;
 }
